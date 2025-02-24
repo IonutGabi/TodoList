@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap");
+
+:root {
+  --background-color: #eae0d5;
+  --color: #0a0908;
+  --checked-button-color: #4f9d69;
+  --buttons-color: #ffc857;
+  --checked-text-color: #ffff;
+  --line-through-color: gray;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", serif;
+}
+
+body {
+  font-weight: 500;
+  font-style: normal;
+  background-color: var(--background-color);
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  height: 80vh;
+  color: var(--color);
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 80vh;
+  gap: 10px;
+}
+
+.inputText {
+  width: 300px;
+  padding: 8px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+}
+
+#add {
+  background-color: var(--buttons-color);
+  color: var(--color);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#allTrue {
+  background-color: var(--buttons-color);
+  color: var(--color);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#taskList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.task {
+  font-weight: bold;
+  padding: 8px;
+  font-size: 1rem;
+  list-style: none;
+}
+
+.task input {
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  padding: 8px;
+}
+
+.checked {
+  background-color: var(--checked-button-color);
+  color: var(--checked-text-color);
+  font-weight: bold;
+  border: none;
+  margin: 10px 8px;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.edit {
+  background-color: var(--buttons-color);
+  border: none;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.message {
+  text-decoration: line-through;
+  color: var(--line-through-color);
+}
+
+.editInput {
+  align-items: stretch;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.submit {
+  background-color: var(--buttons-color);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
