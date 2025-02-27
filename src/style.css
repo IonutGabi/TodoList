@@ -7,6 +7,8 @@
   --buttons-color: #ffc857;
   --checked-text-color: #ffff;
   --line-through-color: gray;
+  --color-delete-btn: red;
+  --color-delete-btn-hover: #0075a2;
 }
 
 * {
@@ -27,25 +29,23 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
-  height: 80vh;
   color: var(--color);
+  gap: 20px;
 }
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  height: 80vh;
-  gap: 10px;
+  gap: 20px;
 }
 
 .inputText {
   width: 300px;
   padding: 8px;
-  border-radius: 5px;
+  border-radius: 10px;
   border: none;
   font-size: 1rem;
+  outline: none;
 }
 
 #add {
@@ -67,15 +67,12 @@ body {
   cursor: pointer;
   font-size: 1rem;
 }
-
-#taskList {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .task {
-  font-weight: bold;
+  display: flex;
+  align-items: center;
   padding: 8px;
+  gap: 5px;
+  font-weight: bold;
   font-size: 1rem;
   list-style: none;
 }
@@ -87,56 +84,28 @@ body {
   padding: 8px;
 }
 
-.checked {
-  background-color: var(--checked-button-color);
-  color: var(--checked-text-color);
-  font-weight: bold;
-  border: none;
-  margin: 10px 8px;
-  border-radius: 10px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.edit {
-  background-color: var(--buttons-color);
-  border: none;
-  margin-top: 10px;
-  border-radius: 10px;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.message {
+.completed {
   text-decoration: line-through;
   color: var(--line-through-color);
 }
 
-.editInput {
-  align-items: stretch;
-  padding: 8px;
-  border-radius: 10px;
+.delete-btn {
+  background: none;
   border: none;
-  font-size: 1rem;
-  outline: none;
-}
-
-.list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.submit {
-  background-color: var(--buttons-color);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 10px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 18px;
+  color: var(--color-delete-btn);
+  transition: 0.3s;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--checked-button-color);
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+}
+
+.delete-btn:hover {
+  background-color: var(--color-delete-btn-hover);
+  border-radius: 5px;
 }

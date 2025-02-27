@@ -5,6 +5,7 @@ import {
   updateTaskName,
   changeCheckedToTrue,
   changeAllTaskToTrue,
+  deleteTask,
 } from "./motor.js";
 
 const getTaskOfInput = (): string => {
@@ -18,7 +19,7 @@ const getTaskOfInput = (): string => {
   return value;
 };
 
-export const AddTask = () => {
+export const addTask = () => {
   const value = getTaskOfInput();
   addNewTask(value);
   createTaskList(taskList);
@@ -30,91 +31,104 @@ const createTaskList = (tasks: Task[]) => {
     taskListElement.innerHTML = "";
     tasks.forEach((task) => {
       const li = document.createElement("li");
-      li.appendChild(createEditInput(task.id, task.name, task.isCompleted));
-      li.appendChild(createCheckBox(task.id, task.isCompleted));
+      li.appendChild(createCheckBox(task.id));
+      li.appendChild(createEditInput(task.id, task.name));
+      li.appendChild(createDeleteButton(task.id));
       li.classList.add("task");
-      if (task.isCompleted) {
-        li.classList.add("message");
-      }
       taskListElement.appendChild(li);
     });
   }
 };
 
-const createCheckBox = (id: number, isTrue: boolean): HTMLInputElement => {
+const createCheckBox = (id: number): HTMLInputElement => {
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-  checkbox.checked = isTrue;
-  checkbox.addEventListener("change", () => paintCheckedTasks(id));
+  checkbox.addEventListener("change", () => addStyleToTask(id));
   return checkbox;
 };
 
-// const createCompletedMessage = () => {
-//   taskList.forEach((task) => {
-//     const paragraph = document.createElement("p");
-//     paragraph.classList.add("message");
-//     paragraph.textContent = task.isCompleted
-//       ? `${task.name} is completed`
-//       : `${task.name} is not completed`;
-//     containerList.appendChild(paragraph);
-//   });
-// };
-
-const createEditInput = (
-  id: number,
-  name: string,
-  completed: boolean
-): HTMLInputElement => {
+const createEditInput = (id: number, name: string): HTMLInputElement => {
   const input = document.createElement("input");
   input.type = "text";
   input.value = name;
-  input.addEventListener("blur", () => paintNewTaskList(id, input.value));
-  if (completed) {
-    input.classList.add("message");
-  }
+  input.id = `task-${id}`;
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      paintNewTaskList(id, input.value);
+    }
+  });
   return input;
 };
-
-// const createSubmitButton = (): HTMLButtonElement => {
-//   const btn = document.createElement("button");
-
-//   btn.textContent = "Submit";
-//   btn.classList.add("submit");
-
-//   containerList.appendChild(btn);
-
-//   return btn;
-// };
 
 const paintNewTaskList = (id: number, value: string) => {
   const newTasks = updateTaskName(id, value);
   createTaskList(newTasks);
 };
 
-// const handleTaskEditing = (id: number) => {
-//   const input = createEditInput(id);
-//   const btn = createSubmitButton();
-
-//   btn.addEventListener("click", () => paintNewTaskList(id, input.value));
-// };
-
-// const createEditButton = (index: number): HTMLButtonElement => {
-//   const button = document.createElement("button");
-
-//   button.textContent = "Edit task";
-//   button.classList.add("edit");
-
-//   button.addEventListener("click", () => handleTaskEditing(index));
-
-//   return button;
-// };
-
-const paintCheckedTasks = (id: number) => {
+const addStyleToTask = (id: number) => {
   changeCheckedToTrue(id);
-  createTaskList(taskList);
+  const input = document.getElementById(`task-${id}`);
+  if (input && input instanceof HTMLInputElement) {
+    taskList.some((task) => task.id === id && task.isCompleted)
+      ? input.classList.add("completed")
+      : input.classList.remove("completed");
+  }
 };
 
-export const paintCompletedMessageInAllTasks = () => {
+export const updateTaskViewInTheUI = () => {
   changeAllTaskToTrue();
-  createTaskList(taskList);
+  allTasksTrue();
+};
+
+const addClassToInput = (): NodeList => {
+  const input = document.querySelectorAll("input[type='text']");
+  input.forEach((input) => {
+    input.classList.add("completed");
+  });
+  return input;
+};
+
+const removeClassToInput = (): NodeList => {
+  const input = document.querySelectorAll("input[type='text']");
+  input.forEach((input) => {
+    input.classList.remove("completed");
+  });
+  return input;
+};
+
+const addAttributeToCheckbox = (): NodeList => {
+  const checkbox = document.querySelectorAll("input[type='checkbox']");
+  checkbox.forEach((checkbox) => {
+    checkbox.setAttribute("checked", "checked");
+  });
+  return checkbox;
+};
+
+const removeAttributeToCheckbox = (): NodeList => {
+  const checkbox = document.querySelectorAll("input[type='checkbox']");
+  checkbox.forEach((checkbox) => {
+    checkbox.removeAttribute("checked");
+  });
+  return checkbox;
+};
+const allTasksTrue = () => {
+  const isCompleted = taskList.every((task) => task.isCompleted);
+  if (isCompleted) {
+    addClassToInput();
+    addAttributeToCheckbox();
+  } else {
+    removeClassToInput();
+    removeAttributeToCheckbox();
+  }
+};
+
+const createDeleteButton = (id: number): HTMLButtonElement => {
+  const button = document.createElement("button");
+  button.textContent = "❌";
+  button.classList.add("delete-btn");
+  button.addEventListener("click", () => {
+    const updatedTasks = deleteTask(id);
+    createTaskList(updatedTasks);
+  });
+  return button;
 };

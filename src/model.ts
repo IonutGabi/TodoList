@@ -5,7 +5,3 @@ export interface Task {
 }
 
 export let tasks: Task[] = [];
-
-export const updateTasks = (newTasks: Task[]) => {
-  tasks = newTasks;
-};
